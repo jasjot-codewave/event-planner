@@ -35,7 +35,7 @@ export default function Calendar({events}) {
     let list = Object.groupBy(e, ({ date }) => date);
     setListEvents((e) => list);
     setThisMonthEvents((events) => e);
-  }, [currentMonth, currentYear]);
+  }, [currentMonth, currentYear, events]);
 
   const decrementMonth = () => {
     if (currentMonth) {
@@ -210,7 +210,7 @@ export default function Calendar({events}) {
               <div key={key} className="py-6 border-b-2 border-[#E7EBEE] flex justify-center items-start px-6">
                 <div className="w-[20%] flex flex-col gap-2">
                   {listEvents[key].map((event, i) => (
-                    <div className={`text-sm ${getEventBgColor(event.category)} ${getEventColor(event.category)} px-4 py-1 rounded-md w-fit`}>{event.title}</div>
+                    <div key={i} className={`text-sm ${getEventBgColor(event.category)} ${getEventColor(event.category)} px-4 py-1 rounded-md w-fit`}>{event.title}</div>
                   ))}
                 </div>
                 <div className="w-[15%] uppercase text-sm text-[#4C472A] font-semibold">{key}</div>

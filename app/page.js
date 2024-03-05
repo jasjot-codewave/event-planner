@@ -119,7 +119,7 @@ export default function Home() {
             </div>
             <div className="flex justify-between items-center">
               <div className="flex justify-center items-center gap-3">
-                <Image src={bookingImage} className="aspect-square rounded-full w-[42px]" />
+                <Image src={bookingImage} alt="booking-image" className="aspect-square rounded-full w-[42px]" />
                 <div>
                   <div className="font-bold">Joaquín Torres</div>
                   <div className="text-xs">Requested on 18th Feb</div>

@@ -22,7 +22,7 @@ export default function UpcomingEventCard({ event }) {
         setColor("bg-[#825B3780]");
         break;
     }
-  }, []);
+  }, [category]);
   return (
     <div className="py-4 px-2 border-b border-b-[#D9D9D9] flex justify-center items-stretch gap-4 w-full">
       <div className="text-sm font-bold flex justify-center items-center text-nowrap">{date}</div>
