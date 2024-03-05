@@ -17,7 +17,7 @@ export default function Calendar({ events }) {
   const [prevMonth, setPrevMonth] = useState(0);
   const [thisMonthEvents, setThisMonthEvents] = useState([]);
   const [listEvents, setListEvents] = useState({});
-  const [view, setView] = useState("List");
+  const [view, setView] = useState("Calendar");
   const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
   let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
@@ -59,26 +59,6 @@ export default function Calendar({ events }) {
   const incrementYear = () => {
     setCurrentYear((year) => year + 1);
   };
-  const decrementDay = () => {
-    let months1 = [0, 1, 3, 5, 7, 8, 10]; //Previous month contains 31 days
-    let months2 = [4, 6, 9, 11]; //Previous month contains 30 days
-    if (currentDate === 1) {
-      if (months1.includes(currentMonth)) {
-        setCurrentDate((date) => 31);
-      } else if (months2.includes(currentMonth)) {
-        setCurrentDate((date) => 30);
-      } else {
-        if (isLeapYear(currentYear)) {
-          setCurrentDate((date) => 29);
-        } else {
-          setCurrentDate((date) => 28);
-        }
-      }
-      decrementMonth();
-    } else {
-      setCurrentDate((date) => date - 1);
-    }
-  };
   const isLeapYear = (year) => {
     return year % 100 === 0 ? year % 400 === 0 : year % 4 === 0;
   };
@@ -99,6 +79,16 @@ export default function Calendar({ events }) {
     const d = new Date(`${months[mm]} ${1}, ${yyyy}`).getDay();
     return d;
   };
+  const goToToday = () => {
+    setView("Calendar");
+    setCurrentDate(new Date().getDate());
+    setCurrentMonth(new Date().getMonth());
+    setCurrentYear(new Date().getFullYear());
+  };
+  const goToListView = (date) => {
+    setCurrentDate(date);
+    setView("List");
+  }
   const getEventColor = (category) => {
     switch (category) {
       case "Catering":
@@ -146,9 +136,9 @@ export default function Calendar({ events }) {
 
   return (
     <div className="w-full max-w-[845px] md:text-base sm:text-sm text-xs">
-      <div className="flex justify-between items-center mb-5 select-none flex-wrap-reverse gap-5" >
+      <div className="flex justify-between items-center mb-5 select-none flex-wrap-reverse gap-5">
         <div className="flex items-center gap-5">
-          <div className="rounded-lg bg-white text-sm px-4 py-2 box-shadow cursor-pointer">Today</div>
+          <div className="rounded-lg bg-white text-sm px-4 py-2 box-shadow cursor-pointer" onClick={() => goToToday()}>Today</div>
           <div className="flex items-center gap-2">
             <IoChevronBackCircleOutline size={25} color="#000" className="cursor-pointer" onClick={() => decrementMonth()} />
             <IoChevronForwardCircleOutline size={25} color="#000" className="cursor-pointer" onClick={() => incrementMonth()} />
@@ -171,12 +161,12 @@ export default function Calendar({ events }) {
             </div>
           ))}
           {[...Array(getFirstDayofMonth(currentMonth, currentYear)).keys()].reverse().map((i) => (
-            <div key={i} className="relative w-[calc(100%/7)] aspect-[1.59] border border-[#F2F2F4]">
+            <div key={i} className="relative w-[calc(100%/7)] aspect-[1.59] border border-[#F2F2F4] cursor-pointer">
               <div className="absolute top-1 right-3 text-[#B5B5B5]">{`${numberOfDaysInMonth(prevMonth) - i < 10 ? "0" : ""}${numberOfDaysInMonth(prevMonth) - i} `}</div>
             </div>
           ))}
           {Array.from({ length: numberOfDaysInMonth(currentMonth) }, (_, i) => (
-            <div key={i} className={`relative w-[calc(100%/7)] aspect-[1.59]  ${currentMonth === todayMonth && currentYear === todayYear && i + 1 === todayDate ? "border-2 border-[#CBAD84]" : "border border-[#F2F2F4]"}`}>
+            <div key={i} className={`relative w-[calc(100%/7)] aspect-[1.59]  ${currentMonth === todayMonth && currentYear === todayYear && i + 1 === todayDate ? "border-2 border-[#CBAD84]" : "border border-[#F2F2F4]"} cursor-pointer`} onClick={() => goToListView(i+1)}>
               <div className="absolute top-1 right-3">{`${i + 1 < 10 ? "0" : ""}${i + 1}`}</div>
               <div className="max-w-[70%] h-full px-1 py-1 overflow-scroll no-scrollbar sm:flex flex-col gap-1 hidden">
                 {thisMonthEvents
@@ -191,7 +181,7 @@ export default function Calendar({ events }) {
             </div>
           ))}
           {Array.from({ length: 42 - numberOfDaysInMonth(currentMonth) - getFirstDayofMonth(currentMonth, currentYear) }, (_, i) => (
-            <div key={i} className="relative w-[calc(100%/7)] aspect-[1.59] border border-[#F2F2F4]">
+            <div key={i} className="relative w-[calc(100%/7)] aspect-[1.59] border border-[#F2F2F4] cursor-pointer">
               <div className="absolute top-1 right-3 text-[#B5B5B5]">{`${i + 1 < 10 ? "0" : ""}${i + 1}`}</div>
             </div>
           ))}
