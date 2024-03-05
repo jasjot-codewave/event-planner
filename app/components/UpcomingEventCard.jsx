@@ -24,12 +24,12 @@ export default function UpcomingEventCard({ event }) {
     }
   }, [category]);
   return (
-    <div className="py-4 px-2 border-b border-b-[#D9D9D9] flex justify-center items-stretch gap-4 w-full">
+    <div className="py-4 px-2 lg:border-b border-b-[#D9D9D9] flex justify-center items-stretch gap-4 lg:w-full w-[calc(100%/2)]">
       <div className="text-sm font-bold flex justify-center items-center text-nowrap">{date}</div>
       <div className={`w-[3px] ${color} rounded-lg`}></div>
       <div className="w-full flex-shrink">
-        <div className="text-sm font-bold mb-1">{title}</div>
-        <div className='text-[#8E98A8] text-xs'>{description}</div>
+        <div className="text-sm font-bold mb-1 line-clamp-1">{title}</div>
+        <div className='text-[#8E98A8] text-xs line-clamp-1'>{description}</div>
       </div>
     </div>
   );

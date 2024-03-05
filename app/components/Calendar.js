@@ -4,10 +4,10 @@ import React, { useEffect, useState } from "react";
 import { IoChevronBackCircleOutline, IoChevronForwardCircleOutline } from "react-icons/io5";
 
 import listIcon from "../assets/list-icon.svg";
-import calendarIcon from '../assets/calendar-icon.svg'
+import calendarIcon from "../assets/calendar-icon.svg";
 import Image from "next/image";
 
-export default function Calendar({events}) {
+export default function Calendar({ events }) {
   const [currentDate, setCurrentDate] = useState(new Date().getDate());
   const [currentMonth, setCurrentMonth] = useState(new Date().getMonth());
   const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
@@ -145,8 +145,8 @@ export default function Calendar({events}) {
   };
 
   return (
-    <div className="w-full max-w-[845px]">
-      <div className="flex justify-between items-center mb-5 select-none">
+    <div className="w-full max-w-[845px] md:text-base sm:text-sm text-xs">
+      <div className="flex justify-between items-center mb-5 select-none flex-wrap-reverse gap-5" >
         <div className="flex items-center gap-5">
           <div className="rounded-lg bg-white text-sm px-4 py-2 box-shadow cursor-pointer">Today</div>
           <div className="flex items-center gap-2">
@@ -166,7 +166,8 @@ export default function Calendar({events}) {
         <div className="flex justify-center items-center flex-wrap box-shadow rounded-xl overflow-hidden cursor-default">
           {days.map((day, i) => (
             <div key={i} className="relative w-[calc(100%/7)] aspect-[1.8] border border-[#F2F2F4]">
-              <div className="absolute top-4 right-3">{day}</div>
+              <div className="absolute top-4 right-1 md:right-3 sm:block hidden">{day}</div>
+              <div className="sm:hidden flex justify-center items-center h-full">{day.substring(0, 3)}</div>
             </div>
           ))}
           {[...Array(getFirstDayofMonth(currentMonth, currentYear)).keys()].reverse().map((i) => (
@@ -177,7 +178,7 @@ export default function Calendar({events}) {
           {Array.from({ length: numberOfDaysInMonth(currentMonth) }, (_, i) => (
             <div key={i} className={`relative w-[calc(100%/7)] aspect-[1.59]  ${currentMonth === todayMonth && currentYear === todayYear && i + 1 === todayDate ? "border-2 border-[#CBAD84]" : "border border-[#F2F2F4]"}`}>
               <div className="absolute top-1 right-3">{`${i + 1 < 10 ? "0" : ""}${i + 1}`}</div>
-              <div className="max-w-[70%] h-full px-1 py-1 overflow-scroll no-scrollbar flex flex-col gap-1">
+              <div className="max-w-[70%] h-full px-1 py-1 overflow-scroll no-scrollbar sm:flex flex-col gap-1 hidden">
                 {thisMonthEvents
                   .filter((event) => Number(event.date.split("-")[0]) === i + 1)
                   .map((e) => (
@@ -197,40 +198,54 @@ export default function Calendar({events}) {
         </div>
       )}
       {view === "List" && (
-        <div className="w-full aspect-[1.9] box-shadow rounded-xl cursor-default flex flex-col">
-          <div className="py-6 border-b-2 border-[#E7EBEE] flex justify-center items-center px-6 w-full">
-            <div className="w-[20%] font-playfair font-semibold">Services</div>
-            <div className="w-[15%] font-playfair font-semibold">Date</div>
-            <div className="w-[20%] font-playfair font-semibold">Time</div>
-            <div className="w-[20%] font-playfair font-semibold">Client Name</div>
-            <div className="w-[25%] font-playfair font-semibold">Comments</div>
+        <div className="w-full md:aspect-[1.9] aspect-auto max-h-[60vh] box-shadow rounded-xl cursor-default flex flex-col overflow-x-auto no-scrollbar">
+          <div className="py-6 border-b-2 border-[#E7EBEE] flex justify-start items-center px-6 w-fit md:w-full">
+            <div className="w-[25%] font-playfair font-semibold min-w-[150px]">Services</div>
+            <div className="w-[15%] font-playfair font-semibold min-w-[90px]">Date</div>
+            <div className="w-[20%] font-playfair font-semibold min-w-[125px]">Time</div>
+            <div className="w-[20%] font-playfair font-semibold min-w-[125px]">Client Name</div>
+            <div className="w-[20%] font-playfair font-semibold min-w-[125px]">Comments</div>
           </div>
-          <div className="overflow-scroll no-scrollbar w-full h-full flex-shrink">
-            {Object.keys(listEvents).length > 0 ? Object.keys(listEvents).map((key) => (
-              <div key={key} className="py-6 border-b-2 border-[#E7EBEE] flex justify-center items-start px-6">
-                <div className="w-[20%] flex flex-col gap-2">
-                  {listEvents[key].map((event, i) => (
-                    <div key={i} className={`text-sm ${getEventBgColor(event.category)} ${getEventColor(event.category)} px-4 py-1 rounded-md w-fit`}>{event.title}</div>
-                  ))}
+          <div className="overflow-y-scroll no-scrollbar w-fit md:w-full h-full flex-shrink">
+            {Object.keys(listEvents).length > 0 ? (
+              Object.keys(listEvents).map((key) => (
+                <div key={key} className="py-6 border-b-2 border-[#E7EBEE] flex justify-start items-start px-6">
+                  <div className="w-[25%] flex flex-col gap-2 min-w-[150px]">
+                    {listEvents[key].map((event, i) => (
+                      <div key={i} className={`text-sm ${getEventBgColor(event.category)} ${getEventColor(event.category)} px-4 py-1 rounded-md w-fit`}>
+                        {event.title}
+                      </div>
+                    ))}
+                  </div>
+                  <div className="w-[15%] uppercase text-sm text-[#4C472A] font-semibold  min-w-[90px]">{key}</div>
+                  <div className="w-[20%] flex flex-col gap-2 min-w-[125px]">
+                    {listEvents[key].map((event, i) => (
+                      <div key={i} className={`text-sm px-4 py-1`}>
+                        {event.fullDay ? "All Day" : `${event.fromTime} - ${event.endTime}`}
+                      </div>
+                    ))}
+                  </div>
+                  <div className="w-[20%] flex flex-col gap-2 min-w-[125px]">
+                    {listEvents[key].map((event, i) => (
+                      <div key={i} className={`text-sm px-4 py-1`}>
+                        {event.client}
+                      </div>
+                    ))}
+                  </div>
+                  <div className="w-[20%] flex flex-col gap-2 min-w-[125px]">
+                    {listEvents[key].map((event, i) => (
+                      <div key={i} className={`text-sm px-4 py-1 line-clamp-1`}>
+                        {event.description}
+                      </div>
+                    ))}
+                  </div>
                 </div>
-                <div className="w-[15%] uppercase text-sm text-[#4C472A] font-semibold">{key}</div>
-                <div className="w-[20%] flex flex-col gap-2">
-                  {listEvents[key].map((event, i) => (
-                    <div key={i} className={`text-sm px-4 py-1`}>{event.fullDay ? "All Day" : `${event.fromTime} - ${event.endTime}`}</div>
-                  ))}
-                </div>
-                <div className="w-[20%] flex flex-col gap-2">
-                  {listEvents[key].map((event, i) => (
-                    <div key={i} className={`text-sm px-4 py-1`}>{event.client}</div>
-                  ))}
-                </div>
-                <div className="w-[20%] flex flex-col gap-2">
-                  {listEvents[key].map((event, i) => (
-                    <div key={i} className={`text-sm px-4 py-1 line-clamp-1`}>{event.description}</div>
-                  ))}
-                </div>
+              ))
+            ) : (
+              <div className="text-[#4C472A] p-6 font-semibold">
+                No event scheduled for {months[currentMonth]} {currentYear}{" "}
               </div>
-            )): <div className="text-[#4C472A] p-6 font-semibold">No event scheduled for {months[currentMonth]} {currentYear} </div>}
+            )}
           </div>
         </div>
       )}

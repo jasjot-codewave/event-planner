@@ -100,11 +100,11 @@ export default function Home() {
     },
   ];
   return (
-    <main className="w-full flex">
-      <div className="p-5 min-h-screen w-full max-w-[845px]">
+    <main className="w-full lg:flex">
+      <div className="p-5 lg:min-h-screen w-full max-w-[845px]">
         <div className="max-full mb-10">
-          <h1 className="font-playfair font-semibold text-2xl">Pending Requests</h1>
-          <div className="w-full box-shadow rounded-xl py-8 px-6 my-5">
+          <h1 className="font-playfair font-semibold md:text-2xl text-xl">Pending Requests</h1>
+          <div className="w-full box-shadow rounded-xl py-8 px-6 my-5 text-sm md:text-base">
             <div>
               <b>Joaquín Torres</b> requested to book Banquet Hall 1 for <b>Birthday Party</b>
             </div>
@@ -117,42 +117,46 @@ export default function Home() {
                 <span className="text-[#969CA8] mr-3">From</span> 3:30pm - 6:30pm
               </div>
             </div>
-            <div className="flex justify-between items-center">
-              <div className="flex justify-center items-center gap-3">
-                <Image src={bookingImage} alt="booking-image" className="aspect-square rounded-full w-[42px]" />
+            <div className="sm:flex justify-between items-center">
+              <div className="flex justify-start items-center gap-3">
+                <Image src={bookingImage} alt="booking-image" className="aspect-square rounded-full w-[36px] md:w-[42px]" />
                 <div>
                   <div className="font-bold">Joaquín Torres</div>
                   <div className="text-xs">Requested on 18th Feb</div>
                 </div>
               </div>
-              <div className="flex gap-4 justify-center items-center">
-                <button className="py-1 px-8 rounded bg-[#CBAD84] text-white border border-[#CBAD84]">View Details</button>
-                <button className="py-1 px-8 rounded bg-white text-black border border-black">Decline</button>
-                <button className="py-1 px-8 rounded bg-black text-white border border-black">Accept</button>
+              <div className="flex gap-4 justify-center items-center sm:mt-0 mt-5">
+                <button className="py-1 md:px-8 px-4 rounded bg-[#CBAD84] text-white border border-[#CBAD84]">View Details</button>
+                <button className="py-1 md:px-8 px-4 rounded bg-white text-black border border-black">Decline</button>
+                <button className="py-1 md:px-8 px-4 rounded bg-black text-white border border-black">Accept</button>
               </div>
             </div>
           </div>
         </div>
-        <div className="max-full mt-10">
+        <div className="w-full mt-10">
           <h1 className="font-playfair font-semibold text-2xl mb-5">Calendar</h1>
           <Calendar events={events} />
         </div>
       </div>
-      <div className="p-5 border-l border-[#E8E8E8] min-h-screen">
-        <div className="w-full max-w-[210px]">
+      <div className="p-5 lg:border-l border-[#E8E8E8] lg:min-h-screen">
+        <div className="lg:w-[210px]">
           <h1 className="font-playfair font-semibold text-lg pb-4 border-b-[#D9D9D9] border-b">Upcoming events</h1>
-          {
-            upcomingEvents.map(event => <UpcomingEventCard key={event.id} event={event} />)
-          }
-          <div className="my-4 bg-black text-white rounded-lg p-5">
-            <h1 className="font-playfair text-xl font-semibold">Complete your Profile</h1>
-            <p className=" text-sm mt-3 leading-7">Fill up all the details in your profile to finish the set up.</p>
-            <button className="mt-5 bg-white text-black py-1 px-4 rounded-md leading-5">Complete Profile</button>
+          <div className="flex justify-start items-center lg:block flex-wrap">
+            {
+              upcomingEvents.map(event => <UpcomingEventCard key={event.id} event={event} />)
+            }
           </div>
-          <div className="my-4 bg-gradient-to-r from-[#FCDBA7] to-[#F09F24] text-black rounded-lg p-5">
-            <h1 className="font-playfair text-xl font-semibold">Get Premium Plans </h1>
-            <p className=" text-sm mt-3 leading-7">Upgrade your plans for better listing & better income.</p>
-            <button className="mt-5 bg-white text-black py-1 px-4 rounded-md leading-5">Explore Plans</button>
+          <div className="flex justify-center items-center lg:block flex-wrap gap-5 my-4">
+            <div className="lg:my-4 bg-black text-white rounded-lg p-5 w-full max-w-[250px]">
+              <h1 className="font-playfair text-xl font-semibold">Complete your Profile</h1>
+              <p className=" text-sm mt-3 leading-7">Fill up all the details in your profile to finish the set up.</p>
+              <button className="mt-5 bg-white text-black py-1 px-4 rounded-md leading-5">Complete Profile</button>
+            </div>
+            <div className="lg:my-4 bg-gradient-to-r from-[#FCDBA7] to-[#F09F24] text-black rounded-lg p-5 w-full max-w-[250px]">
+              <h1 className="font-playfair text-xl font-semibold">Get Premium Plans </h1>
+              <p className=" text-sm mt-3 leading-7">Upgrade your plans for better listing & better income.</p>
+              <button className="mt-5 bg-white text-black py-1 px-4 rounded-md leading-5">Explore Plans</button>
+            </div>
           </div>
         </div>
       </div>
