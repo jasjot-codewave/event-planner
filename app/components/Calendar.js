@@ -148,7 +148,7 @@ export default function Calendar({ events }) {
           </div>
         </div>
         <div className="flex items-center gap-3 border border-black rounded px-3 py-1 cursor-pointer" onClick={() => setView((view) => (view === "Calendar" ? "List" : "Calendar"))}>
-          <Image src={view === "List" ? calendarIcon : listIcon} alt="list-icon" />
+          <Image alt="image" src={view === "List" ? calendarIcon : listIcon} alt="list-icon" />
           <div>{view === "List" ? "Calendar" : "List View"}</div>
         </div>
       </div>
